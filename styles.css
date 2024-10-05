@@ -1,0 +1,24 @@
+.cell {
+    /* background-color: red; */
+     display: block;
+     width: 20px;
+     height: 20px;
+     border: 1px solid;
+     border-color: black;
+   }
+   
+   .row {
+     display: flex
+   }
+
+   .hitCell {
+     background-color: red;
+   }
+
+   .nextHitCell {
+     background-color: green;
+   }
+
+   .emptyCell {
+     background-color: turquoise;
+   }
