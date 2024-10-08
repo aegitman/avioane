@@ -1,5 +1,7 @@
 const directions = ['N', 'S', 'E', 'V'];
 const dimension = 10;
+let nrOfPlanes = 3;
+
 let m = Array(dimension)
   .fill()
   .map(() => Array(dimension).fill(0));
@@ -105,6 +107,7 @@ function doTheGrind() {
             if (m[x][y] == 'x') // skip the mark
               continue;
             m[x][y] = m[x][y] + 1; // increase the probability  
+            valueIncrementOnCell(x, y);
           }
         } else {
           // console.log('Direction ' + d + ' does not contain the hit');
@@ -135,6 +138,8 @@ function findNextHit() {
     m[emptyCells[i].x][emptyCells[i].y] = 'o';
   }
 
+  wipeTheCells();
+
   doTheGrind();
 
   findMaximAndPrint();
@@ -158,6 +163,27 @@ function removeFromHits(x, y) {
       hits.splice(i, 1);
       break;
     }
+  }
+}
+
+function valueIncrementOnCell(x, y) {
+  let elements = document.getElementsByClassName("cell");
+  for (let i = 0; i < elements.length; i++) {
+    if (elements[i].parentElement.getAttribute('data-row') == x && elements[i].getAttribute('data-col') == y) {
+      let val = elements[i].innerHTML;
+      if(val == '') {
+        elements[i].innerHTML = 1;
+      } else {
+        elements[i].innerHTML = parseInt(val) + 1;
+      }
+    }
+  }
+}
+
+function wipeTheCells(){
+  let elements = document.getElementsByClassName("cell");
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].innerHTML = '';
   }
 }
 
@@ -198,3 +224,13 @@ for (var i = 0; i < elements.length; i++) {
   elements[i].addEventListener('click', logClick, false);
   elements[i].addEventListener('dblclick', logDblClick, false);
 }
+
+
+function selectPlane(){
+  let planeCells = document.getElementsByClassName("plane");
+  for (var i = 0; i < planeCells.length; i++) {
+    planeCells[i].style.backgroundColor = "#AA0000";
+  }
+}
+
+document.getElementsByClassName("plane-head")[0].addEventListener('click', selectPlane, false);
