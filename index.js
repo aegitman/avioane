@@ -17,6 +17,34 @@ function findPlaneFor(x, y) {
   ]);
 }
 
+function findHeadFor(x, y) {
+  return [{x: x-3, y:y+1}, 
+    {x: x-3, y:y},
+    {x: x-3, y:y-1},
+    {x: x-2, y:y},
+    {x: x-1, y:y+1},
+    {x: x-1, y:y},
+    {x: x-1, y:y-1},
+    {x: x+1, y:y+1},
+    {x: x+1, y:y},
+    {x: x+1, y:y-1},
+    {x: x+2, y:y},
+    {x: x+3, y:y},
+    {x: x+3, y:y+1},
+    {x: x+3, y:y-1},
+    {x: x, y:y-1},
+    {x: x, y:y-2},
+    {x: x+1, y:y-3},
+    {x: x, y:y-3},
+    {x: x-3, y:y-3},
+    {x: x, y:y+1},
+    {x: x, y:y+2},
+    {x: x+1, y:y+3},
+    {x: x, y:y+3},
+    {x: x-1, y:y+3}
+  ];
+}
+
 function isOutside(v) {
   let isOut = false;
   for (let i = 0; i < 8; i++) {
@@ -30,7 +58,7 @@ function isOutside(v) {
 
 function isPartOfHit(v) {
   let isOnHit = false;
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < v.length; i++) {
     if (m[v[i].x][v[i].y] == 'x') {
       isOnHit = true;
       break;
@@ -115,9 +143,45 @@ function doTheGrind() {
   print();
 }
 
+function doTheSmartSearch() {
+    let max = 0;
+    let maxX = 0;
+    let maxY = 0;
+    let bestDirection;
+          
+    for(let h=0;h<hits.length;h++) {
+        console.log('For hit ' + hits[h].x + ',' + hits[h].y);
+        let heads = findHeadFor(hits[h].x, hits[h].y);
+        for(let ah of heads) {
+            console.log('For head ' + ah.x + ',' + ah.y);
+            let planes = findPlaneFor(ah.x, ah.y);
+            for(let d of directions) {
+              let hitCount = 0;
+            
+              if (isOutside(planes.get(d)) || isPartOfEmpty(planes.get(d))) {
+                continue;
+              }
+
+              if (isPartOfHit(planes.get(d))) {
+                  hitCount++;
+              }
+              if(hitCount > max) {
+                max = hitCount;
+                maxX = ah.x;
+                maxY = ah.y;
+                bestDirection = d;
+            }
+          } 
+        }
+    }
+    console.log('Max is ' + max + ' at ' + maxX + ',' + maxY + ' in ' + bestDirection);
+    m[maxX][maxY] = m[maxX][maxY] + 1;
+    findMaximAndPrint();
+}
+
 function print() {
   /// just for print
-  for (let mi = 0; mi < 9; mi++) {
+  for (let mi = 0; mi < 10; mi++) {
     console.log(m[mi]);
   }
 }
@@ -135,7 +199,8 @@ function findNextHit() {
     m[emptyCells[i].x][emptyCells[i].y] = 'o';
   }
 
-  doTheGrind();
+  // doTheGrind();
+  doTheSmartSearch();
 
   findMaximAndPrint();
 }
@@ -149,7 +214,7 @@ function addToHits(x, y) {
     }
   }
   if(!found)
-    hits.push({x: x, y: y});
+    hits.push({x: parseInt(x), y: parseInt(y)});
 }
 
 function removeFromHits(x, y) {

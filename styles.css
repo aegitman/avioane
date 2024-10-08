@@ -22,3 +22,7 @@
    .emptyCell {
      background-color: turquoise;
    }
+
+   .borderCell {
+     border-color: yellow;
+   }
