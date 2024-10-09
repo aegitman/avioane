@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper Airplanes</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="status-bar">
+            <h1>Paper Airplanes</h1>
+            <h4>player - <span id="score">0</span> | <span id="computer-score">0</span> - computer</h4>
+
+            <button id="setupGame">New game</button>
+            <h4 id="message">Place your 3 planes</h4>    
+            <h6></h6>
+        </div>
+
+        <div class="gameDiv">            
+            <div class="board userBoard">
+                <div class="table">
+                    <div class="row" data-row="0">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell cell-p" data-col="3"></div>
+                        <div class="cell cell-p-cp" data-col="4"></div>
+                        <div class="cell cell-p-i" data-col="5"></div>
+                        <div class="cell cell-hit" data-col="6"></div>
+                        <div class="cell cell-c" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="1">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="2">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="3">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="4">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="5">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="6">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="7">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="8">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="9">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                </div>  <!-- / table -->                
+            </div> <!-- / user board -->
+
+            <div class="startGameDiv">                
+                <button id="startGame">Start</button>
+                <button id="endGame">Restart</button>                
+            </div>            
+            
+            <h1></h1>
+            <div class="board aiBoard">
+                <div class="table">
+                    <div class="row" data-row="0">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="1">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="2">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="3">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="4">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="5">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="6">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="7">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="8">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                    <div class="row" data-row="9">
+                        <div class="cell" data-col="0"></div>
+                        <div class="cell" data-col="1"></div>
+                        <div class="cell" data-col="2"></div>
+                        <div class="cell" data-col="3"></div>
+                        <div class="cell" data-col="4"></div>
+                        <div class="cell" data-col="5"></div>
+                        <div class="cell" data-col="6"></div>
+                        <div class="cell" data-col="7"></div>
+                        <div class="cell" data-col="8"></div>
+                        <div class="cell" data-col="9"></div>
+                    </div> <!-- / row -->
+                </div>  <!-- / table -->
+            </div>
+        </div>
+    </div>
+
+<script src="game.js" type="module"></script>
+</body>
+</html>

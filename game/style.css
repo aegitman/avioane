@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;    
+}
+
+.status-bar {
+    text-align: center;
+}
+
+.gameDiv {
+    display: flex;
+    flex-direction: column;    
+}
+
+.board {
+    display: flex;
+    justify-content: center;
+}
+
+.startGameDiv {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* cell styles */
+.row {
+    display: flex
+  }
+
+.cell {
+    /* background-color: red; */
+     display: block;
+     width: 20px;
+     height: 20px;
+     border: 1px solid;
+     border-color: black;
+}
+
+.cell-p {
+    background-color: green;
+} 
+  
+.cell-p-cp {
+    background-color: greenyellow;
+}
+.cell-p-i{
+    background-color: aquamarine;
+}
+
+.cell-hit {
+    background-color: red;
+}
+
+.cell-c {
+    background-color: darkgrey;
+}
+ 
+/* action buttons */
+#endGame {
+    display: none;
+}
+
+#startGame {
+    display: none;
+}
+
+#message {
+    display: none;
+}
+
+.aiBoard , .userBoard {
+    display: none;
+}
