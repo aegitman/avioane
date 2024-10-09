@@ -29,11 +29,10 @@ function isOutside(v) {
 }
 
 function isPartOfHit(v) {
-  let isOnHit = false;
+  let isOnHit = 0;
   for (let i = 0; i < 8; i++) {
     if (m[v[i].x][v[i].y] == 'x') {
-      isOnHit = true;
-      break;
+      isOnHit++;
     }
   }
   return isOnHit;
@@ -84,8 +83,11 @@ function findMaximAndPrint() {
 
 function doTheGrind() {
   // call this method
-  for (let mi = 0; mi < 9; mi++) {
-    for (let mj = 0; mj < 9; mj++) {
+  wipeTheCells();
+  let gMaxHit = 0;
+  let gPlanes = [];
+  for (let mi = 0; mi < 10; mi++) {
+    for (let mj = 0; mj < 10; mj++) {
       // console.log('Work with cell ' + mi + ',' + mj);
 
       let planes = findPlaneFor(mi, mj);
@@ -97,18 +99,24 @@ function doTheGrind() {
           continue;
         }
 
-        if (isPartOfHit(planes.get(d))) {
-          // console.log('Direction ' + d + ' contains the hit');
-          for (let i = 0; i < 8; i++) {
-            let x = planes.get(d)[i].x;
-            let y = planes.get(d)[i].y;
-            if (m[x][y] == 'x') // skip the mark
-              continue;
-            m[x][y] = m[x][y] + 1; // increase the probability  
-          }
-        } else {
-          // console.log('Direction ' + d + ' does not contain the hit');
+        let maxHit = isPartOfHit(planes.get(d));  
+        if (maxHit > gMaxHit) {
+          gMaxHit = maxHit;
+        } 
+        if(maxHit > 0) {
+          gPlanes.push({x: mi, y: mj, h: maxHit});
         }
+      }
+    }
+  }
+
+  for (let i = 0; i < gPlanes.length; i++) {
+    if(gPlanes[i].h == gMaxHit) {
+      let x = gPlanes[i].x;
+      let y = gPlanes[i].y;
+      if (m[x][y] != 'x') {
+        valueIncrementOnCell(x, y);
+        m[x][y] = m[x][y] + 1; // increase the probability         
       }
     }
   }
@@ -197,4 +205,25 @@ var elements = document.getElementsByClassName("cell");
 for (var i = 0; i < elements.length; i++) {
   elements[i].addEventListener('click', logClick, false);
   elements[i].addEventListener('dblclick', logDblClick, false);
+}
+
+function valueIncrementOnCell(x, y) {
+  let elements = document.getElementsByClassName("cell");
+  for (let i = 0; i < elements.length; i++) {
+    if (elements[i].parentElement.getAttribute('data-row') == x && elements[i].getAttribute('data-col') == y) {
+      let val = elements[i].innerHTML;
+      if(val == '') {
+        elements[i].innerHTML = 1;
+      } else {
+        elements[i].innerHTML = parseInt(val) + 1;
+      }
+    }
+  }
+}
+
+function wipeTheCells(){
+  let elements = document.getElementsByClassName("cell");
+  for (let i = 0; i < elements.length; i++) {
+    elements[i].innerHTML = '';
+  }
 }
