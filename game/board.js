@@ -87,7 +87,16 @@ class Board {
         return d[Math.floor(Math.random() * 4)];
     }
 
-    takeFire(x, y) {}
+    takeFire(x, y) {
+        let isHit = [];
+        for (let i = 0; i < this.#planes.length; i++) {
+            let ph = this.#planes[i].takeFire(x, y);
+            if (ph.length > 0) {
+                isHit.push(this.#planes[i].takeFire(x, y));   
+            }
+        }
+        return isHit;
+    }
 }
 
 export default Board

@@ -59,6 +59,10 @@
     background-color: red;
 }
 
+.cell-miss {
+    background-color: deepskyblue;
+}
+
 .cell-c {
     background-color: darkgrey;
 }

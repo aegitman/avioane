@@ -157,6 +157,17 @@ function userHitsOnAi(e) {
     let y = e.target.getAttribute('data-col');
 
     console.log('User hits on AI at ' + x + ',' + y);
+    let cellsHit = aiBoard.takeFire(x, y);
+    if(cellsHit.length > 0) {
+        for (let cell of cellsHit) {
+            for(let c of cell) {
+                let col = getAICellAt(c.x, c.y);
+                col.classList.add('cell-hit');
+            }
+        }
+    } else {
+        e.target.classList.add('cell-miss');        
+    }    
 }
 
 function startGame() {

@@ -31,6 +31,25 @@ class Plane {
         return true;
     }
 
+    /**
+     * Return a list of points that were hit, at least one if is not the head, all of them if is the head or null if is a miss
+     * @param {*} x 
+     * @param {*} y 
+     * @returns - list of points that were hit, or null otherwise
+     * 
+     */
+    takeFire(x, y) {
+        if(this.x == x && this.y == y){
+            return this.getBody();
+        }
+        for (let i = 0; i < this.getBody().length; i++) {
+            if (this.getBody()[i].x == x && this.getBody()[i].y == y) {
+                return [{x:x, y:y}];
+            }
+        }
+        return [];
+    }
+
     nextDirection() {
         let dir = this.h;
         this.h = this.#directions[(this.#directions.indexOf(dir) + 1) % 4];
