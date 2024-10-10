@@ -74,3 +74,7 @@
 .aiBoard , .userBoard {
     display: none;
 }
+
+.disable-dbl-tap-zoom {
+    touch-action: manipulation;
+  }
