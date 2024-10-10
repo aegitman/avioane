@@ -7,6 +7,7 @@ var endGameBtn = document.querySelector('#endGame');
 var msgLbl = document.querySelector('#message');
 var userBoardDiv = document.querySelector('.userBoard');
 var aiBoardDiv = document.querySelector('.aiBoard');
+var statusLbl = document.querySelector('#status');
 
 var planesLeft = 3;
 var activePlane = null;
@@ -51,6 +52,13 @@ function getCellAt(x, y) {
     return col;
 }
 
+function getAICellAt(x, y) {
+    let row = document.querySelector('div.aiBoard div[data-row="' + x + '"]');
+    let col = row.querySelector('div[data-col="' + y + '"]');
+    return col;
+}
+
+
 function removeUIPlane(plane) {  
     for (let cell of plane.getBody()) {
         let col = getCellAt(cell.x, cell.y);
@@ -58,9 +66,22 @@ function removeUIPlane(plane) {
     }
 }
 
+function pointsAreCorners(x, y) {
+    return (x == 0 && y == 0) || 
+    (x == 0 && y == 9) || 
+    (x == 9 && y == 0) || 
+    (x == 9 && y == 9);
+}
+
 function placePlane() {
     planesLeft = 3 - userBoard.planesCount();
     document.querySelector('#userPlanesLeft').innerHTML = planesLeft;
+
+    if(planesLeft == 0) {
+        startGameBtn.style.display = "block";    
+    } else {
+        startGameBtn.style.display = "none";
+    }
 }
 
 /**
@@ -73,6 +94,9 @@ function placePlaneAction(e) {
     let y = e.target.getAttribute('data-col');
     if(isJustRemoved) { // cancel further placement
         isJustRemoved = false;
+        return;
+    }
+    if(pointsAreCorners(x, y)) {
         return;
     }
     // no new planes
@@ -98,7 +122,6 @@ function removePlane(e) {
 function setupGame() {
     console.log('Setup game');
     // prepare the UI for interaction
-    startGameBtn.style.display = "block";
     msgLbl.style.display = "block";
     userBoardDiv.style.display = "flex";
     setupGameBtn.disabled = true;
@@ -122,8 +145,41 @@ function setupGame() {
     }
 }
 
+function removeUserBoardEvents() {
+    var cells = document.getElementsByClassName("cell");
+    for (let cell of cells) {
+        cell.replaceWith(cell.cloneNode(true));
+    }
+}
+
+function userHitsOnAi(e) {
+    let x = e.target.parentElement.getAttribute('data-row');
+    let y = e.target.getAttribute('data-col');
+
+    console.log('User hits on AI at ' + x + ',' + y);
+}
+
 function startGame() {
     console.log('Start game');    
+    removeUserBoardEvents();
+    startGameBtn.disabled = true;
+    statusLbl.style.display = "flex";
+
+    aiBoard.generateRandomPlanes();
+
+    aiBoard.getAllPlanes().forEach(p => {
+        for (let cell of p.getBody()) {
+            let col = getAICellAt(cell.x, cell.y);
+            col.classList.add('cell-p');
+        }  
+    });
+
+    aiBoardDiv.style.display = "flex";
+
+    var cells = document.querySelector("div.aiBoard").getElementsByClassName("cell");
+    for (let cell of cells) {
+        cell.addEventListener('click', userHitsOnAi, false);
+    }
 }
 
 function endGame() {

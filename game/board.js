@@ -38,6 +38,10 @@ class Board {
         return null;
     }
 
+    getAllPlanes() {
+        return this.#planes;
+    }
+
     findNextValidPlane(activePlane, level = 1) {
         activePlane.nextDirection();
         let ap = new Plane(activePlane.x, activePlane.y, activePlane.h); // activePlane.getBody();
@@ -65,6 +69,22 @@ class Board {
             }
         }
         return true;
+    }
+
+    generateRandomPlanes() {
+        while(this.planesCount() < 3) {
+            let x = Math.floor(Math.random() * 8) + 1;
+            let y = Math.floor(Math.random() * 8) + 1;
+            let plane = new Plane(x, y, this.randomDirection());
+            if (this.isPlaneValid(plane)) {
+                this.addPlane(plane);
+            }
+        }
+    }
+
+    randomDirection() {
+        let d = ['N', 'E', 'S', 'V'];
+        return d[Math.floor(Math.random() * 4)];
     }
 
     takeFire(x, y) {}

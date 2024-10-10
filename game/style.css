@@ -22,7 +22,12 @@
 .startGameDiv {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin: 10px;
+}
+
+#status {
+    display: none;
+    justify-content: center;
 }
 
 /* cell styles */
