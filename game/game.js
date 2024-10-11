@@ -167,9 +167,29 @@ function userHitsOnAi(e) {
         }
     } else {
         e.target.classList.add('cell-miss');        
-    }    
+    }   
+
+    aiHitsUser();
 }
 
+function aiHitsUser() {
+    let x = Math.floor(Math.random() * 10);
+    let y = Math.floor(Math.random() * 10);
+    // todo - actually get some intuitive values
+    console.log('AI hits on user at ' + x + ',' + y);
+    let cellsHit = userBoard.takeFire(x,y);
+    if(cellsHit.length > 0) {
+        for (let cell of cellsHit) {
+            for(let c of cell) {
+                let col = getCellAt(c.x, c.y);
+                col.classList.add('cell-hit');
+            }
+        }
+    } else {
+        let col = getCellAt(x, y);
+        col.classList.add('cell-miss');
+    }
+}
 function startGame() {
     console.log('Start game');    
     removeUserBoardEvents();
