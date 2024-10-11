@@ -2,7 +2,6 @@ import Plane from "./plane.js";
 
 class Board {
 
-    #rows = 10;
     #planes = [];    
 
     constructor() {
@@ -55,6 +54,13 @@ class Board {
         }
     }
 
+    /**
+     * Check if a plane is valid to be placed on the board.
+     * A plane is valid if it does not overlap with any of the other planes
+     * already on the board.
+     * @param {Plane} plane - the plane to check
+     * @returns {boolean} - true if the plane is valid, false otherwise
+     */
     isPlaneValid(plane) {
         let argPlanePoints = plane.getBody();
         for (let i = 0; i < this.#planes.length; i++) {

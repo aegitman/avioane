@@ -1,5 +1,6 @@
-import  Board from './board.js';
-import  Plane from './plane.js';
+import Board from './board.js';
+import Plane from './plane.js';
+import Ai from './ai.js';
 
 var setupGameBtn = document.querySelector('#setupGame');
 var startGameBtn = document.querySelector('#startGame');
@@ -13,6 +14,7 @@ var planesLeft = 3;
 var activePlane = null;
 var userBoard = new Board();
 var aiBoard = new Board();
+var ai = new Ai();
 
 var pressTimer;
 var isJustRemoved = false;
@@ -169,26 +171,31 @@ function userHitsOnAi(e) {
         e.target.classList.add('cell-miss');        
     }   
 
+    // todo - check if user wins
     aiHitsUser();
 }
 
 function aiHitsUser() {
-    let x = Math.floor(Math.random() * 10);
-    let y = Math.floor(Math.random() * 10);
-    // todo - actually get some intuitive values
+    let aiHit = ai.takeAShot();
+    let x = aiHit.x;
+    let y = aiHit.y;
+
     console.log('AI hits on user at ' + x + ',' + y);
     let cellsHit = userBoard.takeFire(x,y);
     if(cellsHit.length > 0) {
         for (let cell of cellsHit) {
             for(let c of cell) {
+                ai.setFeedback(c.x, c.y, true);
                 let col = getCellAt(c.x, c.y);
                 col.classList.add('cell-hit');
             }
         }
     } else {
+        ai.setFeedback(x, y, false);
         let col = getCellAt(x, y);
         col.classList.add('cell-miss');
     }
+    // todo - check if AI wins
 }
 function startGame() {
     console.log('Start game');    
