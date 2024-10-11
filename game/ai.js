@@ -6,15 +6,15 @@ class Ai {
     #map;  
     
     constructor() { 
-        this.#map = Array(dimension)
+        this.#map = Array(this.#dimension)
                     .fill()
-                    .map(() => Array(dimension).fill(0));
+                    .map(() => Array(this.#dimension).fill(0));
     }
 
     #resetMap() {
-        this.#map = Array(dimension)
+        this.#map = Array(this.#dimension)
                     .fill()
-                    .map(() => Array(dimension).fill(0));
+                    .map(() => Array(this.#dimension).fill(0));
     }
 
     #findPlaneFor(x, y) {
@@ -75,6 +75,48 @@ class Ai {
         return false;
     }
 
+    #findTheOptimalShot(planes, maxHit) {
+      for (let i = 0; i < planes.length; i++) { // mark the most effective shots
+        if(planes[i].h == maxHit) {
+          let x = planes[i].x;
+          let y = planes[i].y;
+          if (!this.#isCellAHit(x, y)) {
+              this.#map[x][y] = this.#map[x][y] + 1; // increase the probability         
+          }
+        }
+      }
+
+
+      let max = 0;
+      let bestShots = [];
+      // find the maximum value
+      for (let mi = 0; mi < this.#dimension; mi++) {
+        for (let mj = 0; mj < this.#dimension; mj++) {
+          if (max < this.#map[mi][mj]) {
+            max = this.#map[mi][mj];
+          }
+        }
+      }
+      
+      if(max == 0) { // no viable shot
+        return this.#takeARandomShot()
+      }
+      
+      // take all the best shots
+      //
+      for (let mi = 0; mi < this.#dimension; mi++) {
+          for (let mj = 0; mj < this.#dimension; mj++) {
+            if (max == this.#map[mi][mj]) {
+              bestShots.push({x: mi, y: mj});
+            }
+          }
+      }
+
+      console.log('Best shots are ' + bestShots);
+
+      return  bestShots[Math.floor(Math.random()*bestShots.length)];
+    }
+
     setFeedback(x, y, wasHit) {
         if(wasHit) {
             this.#hits.push({x: x, y: y});
@@ -83,14 +125,16 @@ class Ai {
         }
     }
 
+    setPlaneKill(v) {
+        for (let i = 0; i < v.length; i++) {
+            this.#emptyCells.push({x: v[i].x, y: v[i].y});
+        }
+    }
+
     // AI tries to guess the user's planes position
     takeAShot() {
         if(this.#hits.length == 0) {    
-            console.log('No hits found. Generating random shot...');
-            let x = Math.floor(Math.random() * 10);
-            let y = Math.floor(Math.random() * 10);
-            console.log('AI hits on user at ' + x + ',' + y);
-            return {x: x, y: y};
+            return this.#takeARandomShot();
         }
 
         // reset the search map
@@ -122,40 +166,23 @@ class Ai {
             }
           }
         }
-      
-        for (let i = 0; i < gPlanes.length; i++) { // mark the most effective shots
-          if(gPlanes[i].h == gMaxHit) {
-            let x = gPlanes[i].x;
-            let y = gPlanes[i].y;
-            if (!this.#isCellAHit(x, y)) {
-                m[x][y] = m[x][y] + 1; // increase the probability         
-            }
-          }
-        }
 
+        console.log('All Planes that hit something: ' + gPlanes);
+        console.log('The plane that covers a maximum number of hits ' + gMaxHit);
 
-        let max = 0;
-        let bestShots = [];
-        // find the maximum value
-        for (let mi = 0; mi < this.#dimension; mi++) {
-          for (let mj = 0; mj < this.#dimension; mj++) {
-            if (max < this.#map[mi][mj]) {
-              max = this.#map[mi][mj];
-            }
-          }
-        }
-        // take all the best shots
-        for (let mi = 0; mi < this.#dimension; mi++) {
-            for (let mj = 0; mj < this.#dimension; mj++) {
-              if (max == this.#map[mi][mj]) {
-                bestShots = [{x: mi, y: mj}];
-              }
-            }
-        }
+        return this.#findTheOptimalShot(gPlanes, gMaxHit);
+    }
 
-        console.log('Best shots are ' + bestShots);
+    #takeARandomShot(){
+      console.log('No hits found. Generating random shot...');
+      let x, y;
+      do {
+        x = Math.floor(Math.random() * 6) + 2;
+        y = Math.floor(Math.random() * 6) + 2;
+        // random but not repeating
+      } while(this.#isPartOfEmpty([{x: x, y: y}]) || this.#isCellAHit(x, y));
 
-        return  bestShots[Math.floor(Math.random()*bestShots.length)];
+      return {x: x, y: y};
     }
 }
 

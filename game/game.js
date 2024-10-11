@@ -161,11 +161,9 @@ function userHitsOnAi(e) {
     console.log('User hits on AI at ' + x + ',' + y);
     let cellsHit = aiBoard.takeFire(x, y);
     if(cellsHit.length > 0) {
-        for (let cell of cellsHit) {
-            for(let c of cell) {
-                let col = getAICellAt(c.x, c.y);
-                col.classList.add('cell-hit');
-            }
+        for(let c of cellsHit) {
+            let col = getAICellAt(c.x, c.y);
+            col.classList.add('cell-hit');
         }
     } else {
         e.target.classList.add('cell-miss');        
@@ -183,12 +181,14 @@ function aiHitsUser() {
     console.log('AI hits on user at ' + x + ',' + y);
     let cellsHit = userBoard.takeFire(x,y);
     if(cellsHit.length > 0) {
-        for (let cell of cellsHit) {
-            for(let c of cell) {
-                ai.setFeedback(c.x, c.y, true);
-                let col = getCellAt(c.x, c.y);
-                col.classList.add('cell-hit');
-            }
+        if(cellsHit.length == 1) {
+            ai.setFeedback(x, y, true);
+        } else {
+            ai.setPlaneKill(cellsHit);
+        }
+        for (let c of cellsHit) {               
+            let col = getCellAt(c.x, c.y);
+            col.classList.add('cell-hit');            
         }
     } else {
         ai.setFeedback(x, y, false);
@@ -205,12 +205,13 @@ function startGame() {
 
     aiBoard.generateRandomPlanes();
 
-    aiBoard.getAllPlanes().forEach(p => {
-        for (let cell of p.getBody()) {
-            let col = getAICellAt(cell.x, cell.y);
-            col.classList.add('cell-p');
-        }  
-    });
+    // do not show the AI board yet
+    // aiBoard.getAllPlanes().forEach(p => {
+    //     for (let cell of p.getBody()) {
+    //         let col = getAICellAt(cell.x, cell.y);
+    //         col.classList.add('cell-p');
+    //     }  
+    // });
 
     aiBoardDiv.style.display = "flex";
 

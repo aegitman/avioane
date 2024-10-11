@@ -98,7 +98,7 @@ class Board {
         for (let i = 0; i < this.#planes.length; i++) {
             let ph = this.#planes[i].takeFire(x, y);
             if (ph.length > 0) {
-                isHit.push(this.#planes[i].takeFire(x, y));   
+                isHit = this.#planes[i].takeFire(x, y);   
             }
         }
         return isHit;
