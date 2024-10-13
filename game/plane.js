@@ -1,6 +1,7 @@
 class Plane {
 
     #directions = ['N', 'V', 'S', 'E'];
+    #isCrashed = false;
 
     constructor(x, y, h) {
         this.x = x;
@@ -40,6 +41,7 @@ class Plane {
      */
     takeFire(x, y) {
         if(this.x == x && this.y == y){
+            this.#isCrashed = true;
             return this.getBody();
         }
         for (let i = 0; i < this.getBody().length; i++) {
@@ -53,6 +55,10 @@ class Plane {
     nextDirection() {
         let dir = this.h;
         this.h = this.#directions[(this.#directions.indexOf(dir) + 1) % 4];
+    }
+
+    isCrashed() {
+        return this.#isCrashed;
     }
 
     // continue

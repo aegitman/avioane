@@ -11,7 +11,7 @@
     <div class="container disable-dbl-tap-zoom">
         <div class="status-bar">
             <h1>Paper Airplanes</h1>
-            <h4>player - <span id="score">0</span> | <span id="computer-score">0</span> - computer</h4>
+            <h4>player - <span id="userScore">0</span> | <span id="aiScore">0</span> - computer</h4>
 
             <button id="setupGame">New game</button>
             <h4 id="message">Place your <span id="userPlanesLeft">3</span> planes</h4>    
@@ -145,10 +145,8 @@
             </div> <!-- / user board -->
 
             <div class="startGameDiv">                
-                <button id="startGame">Start</button>
-                <button id="endGame">Restart</button>                
+                <button id="startGame">Start</button>                              
             </div>            
-            <h5 id="status">Your turn !</h5>
             <div class="board aiBoard">
                 <div class="table">
                     <div class="row" data-row="0">
@@ -274,6 +272,7 @@
                 </div>  <!-- / table -->
             </div>
         </div>
+        <h1></h1>
     </div>
 
 <script src="game.js" type="module"></script>

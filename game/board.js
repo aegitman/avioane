@@ -103,6 +103,18 @@ class Board {
         }
         return isHit;
     }
+
+    isGameOver() {
+        let allCrashed = true;
+        for (let i = 0; i < this.#planes.length; i++) {
+            allCrashed = allCrashed && this.#planes[i].isCrashed()
+        }
+        return allCrashed;
+    }
+
+    reset() {
+        this.#planes = [];
+    }
 }
 
 export default Board
