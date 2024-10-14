@@ -62,7 +62,7 @@ function findMaximAndPrint() {
       }
     }
   }
-  console.log('Max is ' + max + ' at ' + x + ',' + y);
+  
   let elements = document.getElementsByClassName("cell");
   for (let i = 0; i < elements.length; i++) {
     elements[i].classList.remove("nextHitCell");
@@ -88,14 +88,11 @@ function doTheGrind() {
   let gPlanes = [];
   for (let mi = 0; mi < 10; mi++) {
     for (let mj = 0; mj < 10; mj++) {
-      // console.log('Work with cell ' + mi + ',' + mj);
 
       let planes = findPlaneFor(mi, mj);
 
       for (let d of directions) {
-        // console.log('Work with direction ' + d);
         if (isOutside(planes.get(d)) || isPartOfEmpty(planes.get(d))) {
-          // console.log('Direction ' + d + ' is outside');
           continue;
         }
 

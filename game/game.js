@@ -57,6 +57,18 @@ function getAICellAt(x, y) {
     return col;
 }
 
+function paintAiPlanes() {
+    for (let plane of aiBoard.getAllPlanes()) {
+        if(plane.isCrashed()) {
+            continue;
+        }
+        for (let cell of plane.getBody()) {
+            let col = getAICellAt(cell.x, cell.y);
+            col.classList.add('cell-c');
+        }
+    }
+}
+
 
 function removeUIPlane(plane) {  
     for (let cell of plane.getBody()) {
@@ -198,7 +210,6 @@ function aiHitsUser() {
     let x = aiHit.x;
     let y = aiHit.y;
 
-    console.log('AI hits on user at ' + x + ',' + y);
     let cellsHit = userBoard.takeFire(x,y);
     if(cellsHit.length > 0) {
         if(cellsHit.length == 1) {
@@ -220,7 +231,6 @@ function aiHitsUser() {
     }
 }
 function startGame() {
-    console.log('Start game');    
     removeUserBoardEvents();
     startGameBtn.disabled = true;
     aiBoard.generateRandomPlanes();
@@ -246,6 +256,9 @@ function isGameOver(who) {
         let oldScore = parseInt(document.getElementById('aiScore').innerHTML);
         document.getElementById('aiScore').innerHTML = oldScore + 1;
         document.querySelector('#message').innerHTML = "You lost !";
+
+        // paint all the missing planes of AI
+        paintAiPlanes();
     }
 
     if(isOver) {
@@ -255,20 +268,17 @@ function isGameOver(who) {
 }
 
 function endGame() {
-    console.log('End game');
     let cells = document.getElementsByClassName("cell");
     for (let cell of cells) {
-        // cell.classList.remove('cell-hit', 'cell-miss', 'cell-p');
         cell.replaceWith(cell.cloneNode(true));
     }
     setupGameBtn.disabled = false;    
 }
 
 function resetEnvironment(){
-    console.log('Reset environment');
     let cells = document.getElementsByClassName("cell");
     for (let cell of cells) {
-        cell.classList.remove('cell-hit', 'cell-miss', 'cell-p');
+        cell.classList.remove('cell-hit', 'cell-miss', 'cell-p', 'cell-c');
     }
     aiBoardDiv.style.display = "none";
     setupGameBtn.disabled = false;
