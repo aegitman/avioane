@@ -10,12 +10,20 @@
 
     <div class="container disable-dbl-tap-zoom">
         <div class="status-bar">
-            <h1>Paper Airplanes</h1>
-            <h4>player - <span id="userScore">0</span> | <span id="aiScore">0</span> - computer</h4>
-
-            <button id="setupGame">New game</button>
-            <h4 id="message">Place your <span id="userPlanesLeft">3</span> planes</h4>    
-            <h6></h6>
+            <h1 class="mt-5">Paper Airplanes</h1>
+            <div class="score">
+                <h4 class="scoreHead">player - <span id="userScore">0</span> | <span id="aiScore">0</span> - computer</h4>
+            </div>
+            
+            <div>
+                <button id="setupGame">New game</button>
+                <p style="display: inline-block;"> 
+                    <label class="tooltip">Help <input type="checkbox">
+                        <span style="text-align: left;">-Click to place <br/>-Click again to rotate<br/>-Hold 1 sec to remove</span></label>!
+            </div>
+            
+            <h4 id="message">Place your <span id="userPlanesLeft">3</span> planes </h4>    
+            
         </div>
 
         <div class="gameDiv">            

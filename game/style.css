@@ -45,22 +45,15 @@
 }
 
 .cell-p {
-    background-color: green;
+    background-color: rgb(138, 168, 138);
 } 
-  
-.cell-p-cp {
-    background-color: greenyellow;
-}
-.cell-p-i{
-    background-color: aquamarine;
-}
 
 .cell-hit {
-    background-color: red;
+    background-color: rgb(240, 122, 122);
 }
 
 .cell-miss {
-    background-color: deepskyblue;
+    background-color: rgb(203, 242, 255);
 }
 
 .cell-c {
@@ -86,4 +79,58 @@
 
 .disable-dbl-tap-zoom {
     touch-action: manipulation;
+  }
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+
+.score{
+    display: flex;
+    justify-content: center;
+}
+
+.scoreHead {
+    border: 1px solid black;
+    padding: 8px;
+    margin: 0px 5px 10px 5px;
+}
+
+.tooltip {
+    position: relative;
+    border-bottom: 1px dotted black;
+  }
+  .tooltip span {
+    visibility: hidden;
+    width: 10em;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 9;
+    top: -1em;
+    left:  100%;
+    margin-left:1em;
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  .tooltip span::after {
+    content: "";
+    position: absolute;
+    top: 1.5em;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+  }
+  .tooltip input {
+    display:none;
+  }
+  .tooltip input:checked+span {
+    visibility: visible;
+    opacity: 1;
   }

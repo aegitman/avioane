@@ -37,6 +37,17 @@ class Board {
         return null;
     }
 
+    isCellInPlane(x, y) {
+        for (let i = 0; i < this.#planes.length; i++) {
+            for(let cell of this.#planes[i].getBody()) {
+                if (cell.x == x && cell.y == y) {
+                    return this.#planes[i];
+                }
+            }            
+        }
+        return null;
+    }
+
     getAllPlanes() {
         return this.#planes;
     }
@@ -81,14 +92,14 @@ class Board {
         while(this.planesCount() < 3) {
             let x = Math.floor(Math.random() * 8) + 1;
             let y = Math.floor(Math.random() * 8) + 1;
-            let plane = new Plane(x, y, this.randomDirection());
+            let plane = new Plane(x, y, this.#randomDirection());
             if (this.isPlaneValid(plane)) {
                 this.addPlane(plane);
             }
         }
     }
 
-    randomDirection() {
+    #randomDirection() {
         let d = ['N', 'E', 'S', 'V'];
         return d[Math.floor(Math.random() * 4)];
     }

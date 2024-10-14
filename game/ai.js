@@ -1,3 +1,5 @@
+import Plane from "./plane.js";
+
 class Ai {
     #directions = ['N', 'S', 'E', 'V'];
     #dimension = 10;
@@ -86,7 +88,6 @@ class Ai {
         }
       }
 
-
       let max = 0;
       let bestShots = [];
       // find the maximum value
@@ -111,8 +112,6 @@ class Ai {
             }
           }
       }
-
-      console.log('Best shots are ' + bestShots);
 
       return  bestShots[Math.floor(Math.random()*bestShots.length)];
     }
@@ -167,20 +166,25 @@ class Ai {
           }
         }
 
-        console.log('All Planes that hit something: ' + gPlanes);
-        console.log('The plane that covers a maximum number of hits ' + gMaxHit);
-
         return this.#findTheOptimalShot(gPlanes, gMaxHit);
     }
 
     #takeARandomShot(){
-      console.log('No hits found. Generating random shot...');
       let x, y;
+      let allDirections = [];
       do {
-        x = Math.floor(Math.random() * 6) + 2;
-        y = Math.floor(Math.random() * 6) + 2;
-        // random but not repeating
-      } while(this.#isPartOfEmpty([{x: x, y: y}]) || this.#isCellAHit(x, y));
+        x = Math.floor(Math.random() * 7) + 1;
+        y = Math.floor(Math.random() * 7) + 1;
+        
+        // random but not repeating        
+        allDirections = allDirections.concat(Plane.getN(x, y));
+        allDirections = allDirections.concat(Plane.getE(x, y));
+        allDirections = allDirections.concat(Plane.getS(x, y));
+        allDirections = allDirections.concat(Plane.getV(x, y));
+      } while((this.#isPartOfEmpty(Plane.getN(x, y)) &&
+                this.#isPartOfEmpty(Plane.getE(x, y)) &&
+                this.#isPartOfEmpty(Plane.getS(x, y)) &&
+                this.#isPartOfEmpty(Plane.getV(x, y))) || this.#isCellAHit(x, y));
 
       return {x: x, y: y};
     }

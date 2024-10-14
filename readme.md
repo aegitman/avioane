@@ -10,7 +10,6 @@ menu bar - with score ( hold in a simple var )
         - cell      the class of each individual cell in table
         - cell-p    the class that identifies all the cells of a plane
         - cell-p-cp the class that identifies the cockpit of plane
-        - cell-p-i  the class that identifies all the cells of an invalid plane
         - cell-hit  the class that identifies a hit cell of the plane
         - cell-c    the class that identifies all the cells of a crashed plane
     

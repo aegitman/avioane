@@ -19,10 +19,9 @@ var isJustRemoved = false;
 
 
 function paintPlaneAt(x, y) {
-    console.log('Paint plane at ' + x + ',' + y);
     // if the plane is already there, remove it
-    if( userBoard.hasPlane(x, y) ) {
-        activePlane = userBoard.getPlane(x, y);
+    activePlane = userBoard.isCellInPlane(x, y)
+    if( activePlane != null) {
         // remove old plane    
         userBoard.removePlane(activePlane);
         removeUIPlane(activePlane)
@@ -33,7 +32,7 @@ function paintPlaneAt(x, y) {
 
     // check if the plane is not coliding with other planes
     activePlane = userBoard.findNextValidPlane(activePlane);
-    console.log(activePlane);
+    
     if(activePlane != null) {
         userBoard.addPlane(activePlane);
         placePlane();
@@ -75,11 +74,20 @@ function pointsAreCorners(x, y) {
 
 function placePlane() {
     planesLeft = 3 - userBoard.planesCount();
-    document.querySelector('#userPlanesLeft').innerHTML = planesLeft;
+    // document.querySelector('#userPlanesLeft').innerHTML = planesLeft;    
+    if(planesLeft > 1) {
+        document.querySelector('#message').innerHTML = "Place your " + planesLeft + " planes";
+    } else {
+        if (planesLeft == 1) {
+            document.querySelector('#message').innerHTML = "Place your last plane";
+        } else {
+            document.querySelector('#message').innerHTML = "You are ready to go !";
+        }
+    } 
 
     if(planesLeft == 0) {
         startGameBtn.style.display = "block";  
-        startGameBtn.disabled = false;  
+        startGameBtn.disabled = false;          
     } else {
         startGameBtn.style.display = "none";
     }
@@ -101,7 +109,7 @@ function placePlaneAction(e) {
         return;
     }
     // no new planes
-    if(planesLeft == 0 && !userBoard.hasPlane(x, y)) {
+    if(planesLeft == 0 && !userBoard.isCellInPlane(x, y)) {
         return;
     }
     paintPlaneAt(x, y);
@@ -110,8 +118,7 @@ function placePlaneAction(e) {
 function removePlane(e) {
     let x = e.target.parentElement.getAttribute('data-row');
     let y = e.target.getAttribute('data-col');
-    console.log('Remove plane at ' + x + ',' + y);
-    let p = userBoard.getPlane(x, y);
+    let p = userBoard.isCellInPlane(x, y);
     if(p != null) {
         userBoard.removePlane(p);
         removeUIPlane(p);
@@ -121,16 +128,12 @@ function removePlane(e) {
 }
 
 function setupGame() {
-    if(setupGameBtn.innerHTML == 'Restart') {
-        resetEnvironment();
-    }
-
-    console.log('Setup game');
+    resetEnvironment();
+    
     // prepare the UI for interaction
     msgLbl.style.display = "block";
     userBoardDiv.style.display = "flex";
-    setupGameBtn.disabled = true;
-
+    // setupGameBtn.disabled = true;
 
     // allow clicks on the board to place the planes
     var cells = document.getElementsByClassName("cell");
@@ -149,6 +152,16 @@ function setupGame() {
             return false;
         }, false);
     }
+
+    userBoard.generateRandomPlanes();
+    placePlane();
+     
+    for(let p of userBoard.getAllPlanes()) {
+        for (let cell of p.getBody()) {
+            let col = getCellAt(cell.x, cell.y);
+            col.classList.add('cell-p');
+        }  
+    }
 }
 
 function removeUserBoardEvents() {
@@ -162,7 +175,6 @@ function userHitsOnAi(e) {
     let x = e.target.parentElement.getAttribute('data-row');
     let y = e.target.getAttribute('data-col');
 
-    console.log('User hits on AI at ' + x + ',' + y);
     let cellsHit = aiBoard.takeFire(x, y);
     if(cellsHit.length > 0) {
         for(let c of cellsHit) {
@@ -211,17 +223,7 @@ function startGame() {
     console.log('Start game');    
     removeUserBoardEvents();
     startGameBtn.disabled = true;
-
     aiBoard.generateRandomPlanes();
-
-    // do not show the AI board yet
-    // aiBoard.getAllPlanes().forEach(p => {
-    //     for (let cell of p.getBody()) {
-    //         let col = getAICellAt(cell.x, cell.y);
-    //         col.classList.add('cell-p');
-    //     }  
-    // });
-
     aiBoardDiv.style.display = "flex";
 
     var cells = document.querySelector("div.aiBoard").getElementsByClassName("cell");
@@ -237,11 +239,13 @@ function isGameOver(who) {
         //  update User score
         let oldScore = parseInt(document.getElementById('userScore').innerHTML);
         document.getElementById('userScore').innerHTML = oldScore + 1;
+        document.querySelector('#message').innerHTML = "You won !";
     } else if(who == 'ai' && userBoard.isGameOver()) {
         isOver = true;
         //  update AI score
         let oldScore = parseInt(document.getElementById('aiScore').innerHTML);
         document.getElementById('aiScore').innerHTML = oldScore + 1;
+        document.querySelector('#message').innerHTML = "You lost !";
     }
 
     if(isOver) {
@@ -257,8 +261,7 @@ function endGame() {
         // cell.classList.remove('cell-hit', 'cell-miss', 'cell-p');
         cell.replaceWith(cell.cloneNode(true));
     }
-    setupGameBtn.disabled = false;
-    setupGameBtn.innerHTML = 'Restart';
+    setupGameBtn.disabled = false;    
 }
 
 function resetEnvironment(){
@@ -281,4 +284,3 @@ function resetEnvironment(){
 
 setupGameBtn.addEventListener('click', setupGame)
 startGameBtn.addEventListener('click', startGame)
-// endGameBtn.addEventListener('click', endGame)
